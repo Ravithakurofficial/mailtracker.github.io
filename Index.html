@@ -25,6 +25,7 @@
     </style>
 </head>
 <body>
+    <h1>Email Tracker</h1>
     <img id="loadingImage" src="https://via.placeholder.com/200" alt="Loading">
 
     <script>
@@ -36,10 +37,20 @@
 
             // If email is present, make the request to the server
             if (email) {
+                console.log("Tracking email:", email); // Debugging line to check email in console
                 fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${email}`, {
                     method: 'GET',
                     headers: {
-                        'ngrok-skip-browser-warning': 'true',
+                        'ngrok-skip-browser-warning': 'true', // Skip ngrok's browser warning
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Request successful');
+                        // Optionally, you can update the image here to show success
+                        document.getElementById('loadingImage').src = "https://via.placeholder.com/200/00FF00/FFFFFF?text=Tracked";
+                    } else {
+                        throw new Error('Network response was not ok');
                     }
                 })
                 .catch(error => {
