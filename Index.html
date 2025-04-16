@@ -3,67 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Tracker</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            text-align: center;
-            padding: 50px;
+    <title>Email Tracking</title>
+    <script>
+        // JavaScript to make the GET request to track email
+        function trackEmail() {
+            const email = "thakurravikumar400@gmail.com";  // Replace with your actual email
+            
+            fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${encodeURIComponent(email)}`, {
+                method: 'GET',
+                headers: {
+                    'ngrok-skip-browser-warning': 'true', // Skip ngrok's browser warning
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Tracking request successful');
+                    document.getElementById('status').innerText = 'Email tracking request successful!';
+                } else {
+                    console.error('Tracking request failed');
+                    document.getElementById('status').innerText = 'Tracking request failed';
+                }
+            })
+            .catch(error => {
+                console.error('Error during the request:', error);
+                document.getElementById('status').innerText = 'Error during the request';
+            });
         }
-
-        h1 {
-            font-size: 2em;
-            color: #333;
-        }
-
-        img {
-            margin-top: 20px;
-            width: 200px;
-            height: 200px;
-        }
-    </style>
+        
+        // Call the trackEmail function when the page loads
+        window.onload = trackEmail;
+    </script>
 </head>
 <body>
-    <h1>Email Tracker</h1>
-    <img id="loadingImage" src="https://via.placeholder.com/200" alt="Loading">
-
-    <script>
-        // This function will be executed as soon as the page is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the email parameter from the URL (assuming it is passed in the query string)
-            const urlParams = new URLSearchParams(window.location.search);
-            const email = urlParams.get('email');
-
-            // If email is present, make the request to the server
-            if (email) {
-                console.log("Tracking email:", email); // Debugging line to check email in console
-                fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${email}`, {
-                    method: 'GET',
-                    headers: {
-                        'ngrok-skip-browser-warning': 'true', // Skip ngrok's browser warning
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Request successful');
-                        // Optionally, you can update the image here to show success
-                        document.getElementById('loadingImage').src = "https://via.placeholder.com/200/00FF00/FFFFFF?text=Tracked";
-                    } else {
-                        throw new Error('Network response was not ok');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error during the request:', error);
-                    // Show error image if something went wrong
-                    document.getElementById('loadingImage').src = "https://via.placeholder.com/200/FF0000/FFFFFF?text=Error";
-                });
-            } else {
-                console.error('No email parameter found.');
-                // Show error image if no email parameter is provided
-                document.getElementById('loadingImage').src = "https://via.placeholder.com/200/FF0000/FFFFFF?text=No%20Email";
-            }
-        });
-    </script>
+    <h1>Email Tracking Page</h1>
+    <p id="status">Tracking status will appear here.</p>
 </body>
 </html>
