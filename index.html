@@ -1,41 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Tracking</title>
-    <script>
-        // JavaScript to make the GET request to track email
-        function trackEmail() {
-            const email = "thakurravikumar400@gmail.com";  // Replace with your actual email
-            
-            fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${encodeURIComponent(email)}`, {
-                method: 'GET',
-                headers: {
-                    'ngrok-skip-browser-warning': 'true', // Skip ngrok's browser warning
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    console.log('Tracking request successful');
-                    document.getElementById('status').innerText = 'Email tracking request successful!';
-                } else {
-                    console.error('Tracking request failed');
-                    document.getElementById('status').innerText = 'Tracking request failed';
-                }
-            })
-            .catch(error => {
-                console.error('Error during the request:', error);
-                document.getElementById('status').innerText = 'Error during the request';
-            });
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Tracker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    label, input, button {
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+  <script>
+    function trackEmail() {
+      const email = document.getElementById("emailInput").value;
+      const status = document.getElementById("status");
+
+      if (!email || !email.includes("@gmail.com")) {
+        status.innerText = "Please enter a valid Gmail address.";
+        return;
+      }
+
+      status.innerText = "⏳ Sending tracking request...";
+
+      fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${encodeURIComponent(email)}`, {
+        method: 'GET',
+        headers: {
+          'ngrok-skip-browser-warning': 'true',
         }
-        
-        // Call the trackEmail function when the page loads
-        window.onload = trackEmail;
-    </script>
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('✅ Tracking request successful');
+          status.innerText = '✅ Tracking request sent successfully!';
+        } else {
+          console.warn('⚠️ Tracking request failed');
+          status.innerText = '⚠️ Tracking request failed.';
+        }
+      })
+      .catch(error => {
+        console.error('❌ Error during tracking:', error);
+        status.innerText = '❌ Error during tracking.';
+      });
+    }
+  </script>
 </head>
 <body>
-    <h1>Email Tracking Page</h1>
-    <p id="status">Tracking status will appear here.</p>
+  <h2>Email Tracking Request</h2>
+  <label for="emailInput">Enter your Gmail:</label>
+  <input type="email" id="emailInput" placeholder="yourname@gmail.com" required />
+  <button onclick="trackEmail()">Track Email</button>
+  <p id="status"></p>
 </body>
 </html>
