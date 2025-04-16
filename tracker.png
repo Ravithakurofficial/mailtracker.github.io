@@ -5,26 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Email Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            color: green;
+        }
+    </style>
     <script>
-        // JavaScript to make the GET request to track email
         function trackEmail() {
-            const email = "thakurravikumar400@gmail.com";  // Change to dynamic if needed
-            
+            const email = "thakurravikumar400@gmail.com";  // Static or encoded email
+
             fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${encodeURIComponent(email)}`, {
                 method: 'GET',
                 headers: {
-                    'ngrok-skip-browser-warning': 'true', // Skip ngrok's browser warning
+                    'ngrok-skip-browser-warning': 'true',
                 }
             })
             .then(response => {
+                const statusElement = document.getElementById('status');
                 if (response.ok) {
                     console.log('✅ Tracking request successful');
+                    statusElement.innerText = '✅ Tracking request sent successfully!';
                 } else {
                     console.warn('⚠️ Tracking request failed');
+                    statusElement.innerText = '⚠️ Tracking request failed.';
                 }
             })
             .catch(error => {
                 console.error('❌ Error during tracking:', error);
+                document.getElementById('status').innerText = '❌ Error during tracking.';
             });
         }
 
@@ -32,5 +42,7 @@
     </script>
 </head>
 <body>
+    <h2>Email Tracker</h2>
+    <p id="status">⏳ Sending tracking request...</p>
 </body>
 </html>
