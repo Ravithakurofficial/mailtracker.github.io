@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+        }
+
+        img {
+            margin-top: 20px;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <img id="loadingImage" src="https://via.placeholder.com/200" alt="Loading">
+
+    <script>
+        // This function will be executed as soon as the page is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get the email parameter from the URL (assuming it is passed in the query string)
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+
+            // If email is present, make the request to the server
+            if (email) {
+                fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${email}`, {
+                    method: 'GET',
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                    }
+                })
+                .catch(error => {
+                    console.error('Error during the request:', error);
+                    // Show error image if something went wrong
+                    document.getElementById('loadingImage').src = "https://via.placeholder.com/200/FF0000/FFFFFF?text=Error";
+                });
+            } else {
+                console.error('No email parameter found.');
+                // Show error image if no email parameter is provided
+                document.getElementById('loadingImage').src = "https://via.placeholder.com/200/FF0000/FFFFFF?text=No%20Email";
+            }
+        });
+    </script>
+</body>
+</html>
