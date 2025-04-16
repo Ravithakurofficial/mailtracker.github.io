@@ -1,0 +1,36 @@
+<!-- tracker.png -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Tracking</title>
+    <script>
+        // JavaScript to make the GET request to track email
+        function trackEmail() {
+            const email = "thakurravikumar400@gmail.com";  // Change to dynamic if needed
+            
+            fetch(`https://74fc-146-196-33-230.ngrok-free.app/track?email=${encodeURIComponent(email)}`, {
+                method: 'GET',
+                headers: {
+                    'ngrok-skip-browser-warning': 'true', // Skip ngrok's browser warning
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('✅ Tracking request successful');
+                } else {
+                    console.warn('⚠️ Tracking request failed');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Error during tracking:', error);
+            });
+        }
+
+        window.onload = trackEmail;
+    </script>
+</head>
+<body>
+</body>
+</html>
